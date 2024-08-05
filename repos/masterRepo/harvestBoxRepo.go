@@ -4,6 +4,7 @@ import (
 	"HarvestBox/config"
 	"HarvestBox/models"
 	"HarvestBox/utils"
+	"database/sql"
 	"fmt"
 	"log"
 	"time"
@@ -178,9 +179,20 @@ func (r *HarvestRepository) AdminLogin(email, password string) (string, bool) {
 	query := "SELECT password, user_id FROM Users WHERE email = $1 AND is_admin = TRUE"
 	err = myDb.QueryRow(query, email).Scan(&hashedPassword, &userID)
 	if err != nil {
-		log.Println("Error retrieving admin credentials:", err)
+		if err == sql.ErrNoRows {
+			log.Println("No admin user found with the provided email")
+		} else {
+			log.Println("Error retrieving admin credentials:", err)
+		}
 		return "", false
 	}
+
+	// Compare the provided password with the hashed password
+	// Assuming you have a function `CheckPasswordHash` to do this.
+	// if !utils.CheckPasswordHash(password, hashedPassword) {
+	// 	log.Println("Password does not match")
+	// 	return "", false
+	// }
 
 	// Generate a token for the admin user
 	token, err := utils.GenerateToken(userID, email, "admin")
