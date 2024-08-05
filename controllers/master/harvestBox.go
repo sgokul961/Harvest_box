@@ -27,7 +27,7 @@ func (h *UserHandler) AddFeedbackHandler(w http.ResponseWriter, r *http.Request)
 
 	userRepo := masterrepo.HarvestRepositoryInterface(&masterrepo.HarvestRepository{})
 
-	user, err := userRepo.FindOrCreateUser(feedbackReq.Name, feedbackReq.MailID)
+	user, err := userRepo.FindOrCreateUser(feedbackReq.Name, feedbackReq.Email)
 	if err != nil {
 		utils.HandleError(w, err, "Failed to find or create user", http.StatusInternalServerError)
 		return
@@ -42,6 +42,7 @@ func (h *UserHandler) AddFeedbackHandler(w http.ResponseWriter, r *http.Request)
 
 	utils.SuccessResponse(w, "Successfully added feedback", true, http.StatusOK)
 }
+
 func (h *UserHandler) AddNewUserHandler(w http.ResponseWriter, r *http.Request) {
 	defer func() {
 		if r := recover(); r != nil {

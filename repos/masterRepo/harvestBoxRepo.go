@@ -34,7 +34,7 @@ func (r *HarvestRepository) AddNewFeedback(input *models.Feedback) bool {
 		RETURNING feedback_id;
     `
 	var id int
-	err = myDb.QueryRow(queryInsert, input.UserID, input.Name, input.Age, input.Occupation, input.MailID, input.WouldRecommend, input.Suggestion, input.Likes, time.Now()).Scan(&id)
+	err = myDb.QueryRow(queryInsert, input.UserID, input.Name, input.Age, input.Occupation, input.Email, input.WouldRecommend, input.Suggestion, input.Likes, time.Now()).Scan(&id)
 	if err != nil {
 		log.Println("Error adding new feedback:", err)
 		return false
@@ -68,7 +68,7 @@ func (r *HarvestRepository) GetAllFeedback() ([]models.Feedback, bool) {
 			&feedback.Name,
 			&feedback.Age,
 			&feedback.Occupation,
-			&feedback.MailID,
+			&feedback.Email,
 			&feedback.WouldRecommend,
 			&feedback.Suggestion,
 			&feedback.Likes,
