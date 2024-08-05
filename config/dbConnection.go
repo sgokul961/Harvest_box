@@ -72,7 +72,7 @@ func MigrateTables() error {
     name VARCHAR(100) NOT NULL,
     age INTEGER NOT NULL,
     occupation VARCHAR(255) NOT NULL,
-    mail_id VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
     would_recommend BOOLEAN NOT NULL,
     suggestion TEXT,
     likes TEXT,
