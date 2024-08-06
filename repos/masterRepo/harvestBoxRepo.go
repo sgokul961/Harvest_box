@@ -25,6 +25,7 @@ func (r *HarvestRepository) AddNewFeedback(input *models.Feedback) bool {
 		return false
 	}
 	defer myDb.Close()
+	log.Printf("Received feedback from front end: %+v", input)
 
 	queryInsert := `
         INSERT INTO Feedback 
