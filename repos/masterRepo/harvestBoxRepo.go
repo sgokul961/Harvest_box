@@ -28,7 +28,7 @@ func (r *HarvestRepository) AddNewFeedback(input *models.Feedback) bool {
 
 	queryInsert := `
         INSERT INTO Feedback 
-		(user_id, name, age, occupation, mail_id, would_recommend, suggestion, likes, created_at)
+		(user_id, name, age, occupation, email, would_recommend, suggestion, likes, created_at)
         VALUES 
 		($1, $2, $3, $4, $5, $6, $7, $8, $9) 
 		RETURNING feedback_id;
@@ -52,7 +52,7 @@ func (r *HarvestRepository) GetAllFeedback() ([]models.Feedback, bool) {
 	}
 	defer myDb.Close()
 
-	query := "SELECT feedback_id, user_id, name, age, occupation, mail_id, would_recommend, suggestion, likes, created_at FROM Feedback"
+	query := "SELECT feedback_id, user_id, name, age, occupation, email, would_recommend, suggestion, likes, created_at FROM Feedback"
 	rows, err := myDb.Query(query)
 	if err != nil {
 		log.Println("Error retrieving feedback:", err)
