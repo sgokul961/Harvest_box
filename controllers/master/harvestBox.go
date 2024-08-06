@@ -20,6 +20,8 @@ func (h *UserHandler) AddFeedbackHandler(w http.ResponseWriter, r *http.Request)
 	}()
 
 	feedbackReq := models.Feedback{}
+	log.Printf("Received feedback: %+v", feedbackReq)
+
 	err := json.NewDecoder(r.Body).Decode(&feedbackReq)
 	if err != nil {
 		utils.HandleError(w, err, "Failed to decode request body", http.StatusBadRequest)
