@@ -5,6 +5,7 @@ import (
 	masterrepo "HarvestBox/repos/masterRepo"
 	"HarvestBox/utils"
 	"encoding/json"
+	"log"
 	"net/http"
 )
 
@@ -32,6 +33,7 @@ func (h *UserHandler) AddFeedbackHandler(w http.ResponseWriter, r *http.Request)
 		utils.HandleError(w, err, "Failed to find or create user", http.StatusInternalServerError)
 		return
 	}
+	log.Printf("Received feedback: %+v", feedbackReq)
 
 	feedbackReq.UserID = user.UserID
 

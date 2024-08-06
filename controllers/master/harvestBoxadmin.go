@@ -5,7 +5,6 @@ import (
 	"HarvestBox/utils"
 	middleware "HarvestBox/utils/midleware"
 	"encoding/json"
-	"log"
 	"net/http"
 )
 
@@ -13,9 +12,8 @@ type AdminHandler struct{}
 
 func (h *AdminHandler) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	defer func() {
-		if rec := recover(); rec != nil {
-			log.Println("Panic recovered:", rec)
-			utils.HandleError(w, nil, "Internal server error", http.StatusInternalServerError)
+		if r := recover(); r != nil {
+			utils.HandleError(w, r.(error), "Panic recovered", http.StatusInternalServerError)
 		}
 	}()
 
@@ -30,7 +28,6 @@ func (h *AdminHandler) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	adminRepo := &masterrepo.HarvestRepository{}
-
 	token, success := adminRepo.AdminLogin(loginReq.Email, loginReq.Password)
 	if !success {
 		utils.HandleError(w, nil, "Invalid login credentials", http.StatusUnauthorized)
@@ -41,6 +38,7 @@ func (h *AdminHandler) LoginHandler(w http.ResponseWriter, r *http.Request) {
 	response := map[string]string{"token": token}
 	utils.SuccessResponse(w, "Admin logged in successfully", response, http.StatusOK)
 }
+
 func (h *AdminHandler) GetFeedbackHandler(w http.ResponseWriter, r *http.Request) {
 	defer func() {
 		if r := recover(); r != nil {

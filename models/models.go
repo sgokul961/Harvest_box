@@ -19,7 +19,7 @@ type Feedback struct {
 	Age            int       `json:"age"`
 	Occupation     string    `json:"occupation"`
 	Email          string    `json:"email"`
-	WouldRecommend bool      `json:"would_recommend"`
+	WouldRecommend *bool     `json:"would_recommend"`
 	Suggestion     string    `json:"suggestion"`
 	Likes          string    `json:"likes"`
 	CreatedAt      time.Time `json:"created_at"`
