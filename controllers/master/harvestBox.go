@@ -20,7 +20,7 @@ func (h *UserHandler) AddFeedbackHandler(w http.ResponseWriter, r *http.Request)
 	}()
 
 	feedbackReq := models.Feedback{}
-	log.Printf("Received feedback: %+v", feedbackReq)
+	log.Printf("Received feedback from front end: %+v", feedbackReq)
 
 	err := json.NewDecoder(r.Body).Decode(&feedbackReq)
 	if err != nil {
